@@ -41,13 +41,13 @@ if __name__ == '__main__':
                     values = jmespath.search(path,json_obj)
                     result[outfield] = list(flatten(values))
                     added = True
-                except Exception, e:
+                except Exception as e:
                     pass # consider throwing exception and explain path problem
-                
+
             if not added and defaultval != None:
                 result[outfield] = defaultval
         si.outputResults(results)
-    except Exception, e:
+    except Exception as e:
         import traceback
         stack =  traceback.format_exc()
         si.generateErrorResults("Error '%s'. %s" % (e, stack))
