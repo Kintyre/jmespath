@@ -40,6 +40,7 @@ if __name__ == '__main__':
                     json_obj = json.loads(ojson)
                     values = jmespath.search(path,json_obj)
                     result[outfield] = list(flatten(values))
+                    added = True
                 except Exception, e:
                     pass # consider throwing exception and explain path problem
                 
