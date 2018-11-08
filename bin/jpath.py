@@ -4,7 +4,7 @@ import json, os, sys, itertools
 from itertools import chain
 
 DIR = os.path.dirname(__file__)
-sys.path.append(os.path.join(DIR, "lib/jmespath.egg"))
+sys.path.append(os.path.join(DIR, "lib"))
 
 import jmespath
 
