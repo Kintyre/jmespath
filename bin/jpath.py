@@ -8,6 +8,17 @@ sys.path.append(os.path.join(DIR, "lib/jmespath.egg"))
 
 import jmespath
 
+def flatten(container):
+    if isinstance(container, (list,tuple)):
+        for i in container:
+            if isinstance(i, (list,tuple)):
+                for j in flatten(i):
+                    yield str(j)
+            else:
+                yield str(i)
+    else:
+        yield str(container)
+
 if __name__ == '__main__':
     try:
         keywords,options = si.getKeywordsAndOptions()
@@ -18,9 +29,6 @@ if __name__ == '__main__':
             si.generateErrorResults('Requires exactly one path argument.')
             exit(0)
         path = keywords[0]
-        #Auto Flatten and return all to string	
-	append = ''.join("[]" * path.count('*'))
-        path = path + append + ".to_string(@)"
         results,dummyresults,settings = si.getOrganizedResults()
         # for each results
         for result in results:
@@ -31,13 +39,12 @@ if __name__ == '__main__':
                 try:
                     json_obj = json.loads(ojson)
                     values = jmespath.search(path,json_obj)
-                    result[outfield] = values
+                    result[outfield] = list(flatten(values))
                 except Exception, e:
                     pass # consider throwing exception and explain path problem
                 
             if not added and defaultval != None:
                 result[outfield] = defaultval
-                
         si.outputResults(results)
     except Exception, e:
         import traceback
