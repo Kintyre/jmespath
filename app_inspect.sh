@@ -3,6 +3,7 @@
 set -e
 
 if [[ -d venv ]]; then
+    # shellcheck disable=SC1091
     . venv/bin/activate
 fi
 
@@ -16,4 +17,4 @@ fi
 # Test app inspect
 splunk-appinspect list version
 
-splunk-appinspect inspect $(<.latest_release) --mode precert --included-tags cloud
+splunk-appinspect inspect "$(<.latest_release)" --mode precert --included-tags cloud

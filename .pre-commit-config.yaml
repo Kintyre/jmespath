@@ -1,0 +1,29 @@
+---
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  sha: v2.0.0
+  hooks:
+    - id: trailing-whitespace
+      exclude: README\.md
+    - id: end-of-file-fixer
+      exclude: (README\.md|\.bumpversion.cfg)$
+    - id: check-json
+    - id: check-xml
+    - id: check-ast
+    - id: check-added-large-files
+      args: [ '--maxkb=50' ]
+    - id: check-merge-conflict
+    - id: mixed-line-ending
+      args: [ '--fix=lf' ]
+
+- repo: git://github.com/detailyang/pre-commit-shell
+  sha: 1.0.4
+  hooks:
+    - id: shell-lint
+
+- repo: https://github.com/Kintyre/ksconf
+  sha: v0.5.3
+  hooks:
+    - id: ksconf-check
+#    - id: ksconf-sort
