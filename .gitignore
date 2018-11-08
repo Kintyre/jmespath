@@ -1,1 +1,18 @@
+
+# Python compiled bits (also prohibited by app-inspect)
 *.py[co]
+
+# Local dev env
+venv
+.python-version
+
+# Build/dist stuff
+.latest_release
+build
+dist
+
+# Just stuff to avoid
+*.zip
+*.tgz
+*.spl
+*.tar.gz
