@@ -26,4 +26,4 @@ repos:
   sha: v0.5.3
   hooks:
     - id: ksconf-check
-#    - id: ksconf-sort
+    - id: ksconf-sort
