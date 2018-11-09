@@ -1,4 +1,3 @@
-#   Version 1.0
 import json
 import os
 import sys
@@ -11,7 +10,35 @@ DIR = os.path.dirname(__file__)
 sys.path.append(os.path.join(DIR, "lib"))
 
 import jmespath
+from jmespath import functions
 from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
+
+
+# Custom functions for the JMSEPath language to make some typical splunk use cases easier to manage
+class JmesPathSplunkExtraFunctions(functions.Functions):
+
+    @functions.signature({'types': ['string', 'array']})
+    def _func_parse(self, s):
+        """
+        Possible name options:
+            parse           Nice, but parse what?
+            from_string     Parity with to_string (exports data AS a json string)
+            from_json?      Maybe more clear?  not sure
+            unnest          Can't get past the double "n"s
+            jsonstr         My first option, but don't like it.
+        """
+        # XXX: Figure out how to make this properly support (pass-through) a 'null' type
+        if s is None:
+            return None
+        if isinstance(s, (list,tuple)):
+            return [ json.loads(i) for i in s ]
+        try:
+            return json.loads(s)
+        except:
+            return s
+
+jp_options = jmespath.Options(custom_functions=JmesPathSplunkExtraFunctions())
+
 
 
 def flatten(container):
@@ -24,6 +51,7 @@ def flatten(container):
                 yield str(i)
     else:
         yield str(container)
+
 
 
 if __name__ == '__main__':
@@ -58,7 +86,7 @@ if __name__ == '__main__':
                     # Invalid JSON.  Move on, nothing to see here.
                     continue
                 try:
-                    values = jp.search(json_obj)
+                    values = jp.search(json_obj, options=jp_options)
                     result[outfield] = list(flatten(values))
                     result[ERROR_FIELD] = None
                     added = True
