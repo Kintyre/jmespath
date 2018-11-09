@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import sys
 
 import splunk.Intersplunk as si
@@ -37,8 +38,54 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
         except:
             return s
 
+    @functions.signature({'types': ['array']}, {'types':['string']}, {'types':['string']})
+    def _func_unroll(self, objs, key, value):
+        """ What to call this"?
+            unroll
+            to_hash     Called hash in JSON
+            zipdict     ?
+            kvarray2hash    a bit long
+            xyseries    haha
+            table/untable
+            make_hash
+            unzip       Maybe
+        """
+        d = dict()
+        for item in objs:
+            try:
+                k = item[key]
+                v = item[value]
+                if not isinstance(k, (str, unicode)):
+                    k = str(k)
+                k = sanitize_fieldname(k)
+                # XXX: User option:  Overwrite, or make mvlist  (Possibly just make 2 different functions?)
+                if k not in d:
+                    d[k] = v
+                else:
+                    # Opportunistically turn this into a container to hold more than on value.
+                    # Generally harmful to structured data, but plays nice with Splunk's mvfields
+                    if not isinstance(d[k], list):
+                        d[k] = [ d[k] ]
+                    d[k].append(v)
+            except KeyError:
+                # If either field is missing, just silently move on
+                continue
+            except Exception as e:
+                # FOR DEBUGGING ONLY
+                return "ERROR:  Couldn't find key={} value={} in {}".format(key, value, item)
+        return d
+
+
 jp_options = jmespath.Options(custom_functions=JmesPathSplunkExtraFunctions())
 
+
+def sanitize_fieldname(field):
+    # XXX: Add caching, if needed
+    clean = re.sub(r'[^A-Za-z0-9_.{}\[\]]', "_", field)
+    # Remove leading/trailing underscores
+    # It would be nice to preserve explicit underscores but don't wnat to complicate the code for
+    # a not-yet-existing corner case.  Generally it's better to avoid hidden fields.
+    clean = clean.trim("_")
 
 
 def flatten(container):

@@ -11,6 +11,7 @@ venv
 .latest_release
 build
 dist
+app_inspect*.json
 
 # Just stuff to avoid
 *.zip
