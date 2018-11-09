@@ -1,6 +1,7 @@
 #   Version 1.0
 import splunk.Intersplunk as si
 import json, os, sys, itertools
+import sys
 from itertools import chain
 
 DIR = os.path.dirname(__file__)
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         outfield = options.get('outfield', 'jpath')
         if len(keywords) != 1:
             si.generateErrorResults('Requires exactly one path argument.')
-            exit(0)
+            sys.exit(0)
         path = keywords[0]
         results,dummyresults,settings = si.getOrganizedResults()
         # for each results
@@ -35,7 +36,7 @@ if __name__ == '__main__':
             # get field value
             ojson = result.get(field, None)
             added = False
-            if ojson != None:
+            if ojson is not None:
                 try:
                     json_obj = json.loads(ojson)
                     values = jmespath.search(path,json_obj)
@@ -44,7 +45,7 @@ if __name__ == '__main__':
                 except Exception as e:
                     pass # consider throwing exception and explain path problem
 
-            if not added and defaultval != None:
+            if not added and defaultval is not None:
                 result[outfield] = defaultval
         si.outputResults(results)
     except Exception as e:
