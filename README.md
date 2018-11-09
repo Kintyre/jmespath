@@ -13,7 +13,7 @@ For example, given this document:
 ```json
 {"foo": {"bar": "baz"}}
 ```
-The jmespath expression foo.bar will return "baz".
+The jmespath expression `foo.bar` will return "baz".
 
 JMESPath also supports:
 

@@ -1,4 +1,7 @@
+[]
+access = read : [ * ], write : [ admin ]
+export = system
+
 [commands/jmespath]
-access = read : [ * ], write : [ * ]
 export = system
 owner = nobody
