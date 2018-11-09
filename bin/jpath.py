@@ -1,8 +1,9 @@
 #   Version 1.0
-import splunk.Intersplunk as si
-import json, os, sys, itertools
+import json
+import os
 import sys
-from itertools import chain
+
+import splunk.Intersplunk as si
 
 ERROR_FIELD = "_jmespath_error"
 
@@ -12,10 +13,11 @@ sys.path.append(os.path.join(DIR, "lib"))
 import jmespath
 from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
 
+
 def flatten(container):
-    if isinstance(container, (list,tuple)):
+    if isinstance(container, (list, tuple)):
         for i in container:
-            if isinstance(i, (list,tuple)):
+            if isinstance(i, (list, tuple)):
                 for j in flatten(i):
                     yield str(j)
             else:
@@ -23,9 +25,10 @@ def flatten(container):
     else:
         yield str(container)
 
+
 if __name__ == '__main__':
     try:
-        keywords,options = si.getKeywordsAndOptions()
+        keywords, options = si.getKeywordsAndOptions()
         defaultval = options.get('default', None)
         field = options.get('field', '_raw')
         outfield = options.get('outfield', 'jpath')
@@ -38,11 +41,11 @@ if __name__ == '__main__':
             jp = jmespath.compile(path)
         except ParseError as e:
             # Todo:  Consider stripping off the last line "  ^" pointing to the issue.
-            # Not helpful since Splunk wrapps the error message in a really ugly way.
-            si.generateErrorResults("Invalid JMESPath expression '{}'. {}".format(path,e))
+            # Not helpful since Splunk wraps the error message in a really ugly way.
+            si.generateErrorResults("Invalid JMESPath expression '{}'. {}".format(path, e))
             sys.exit(0)
 
-        results,dummyresults,settings = si.getOrganizedResults()
+        results, dummyresults, settings = si.getOrganizedResults()
         # for each results
         for result in results:
             # get field value
@@ -75,5 +78,6 @@ if __name__ == '__main__':
         si.outputResults(results)
     except Exception as e:
         import traceback
-        stack =  traceback.format_exc()
+
+        stack = traceback.format_exc()
         si.generateErrorResults("Error '%s'. %s" % (e, stack))

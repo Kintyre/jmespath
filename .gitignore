@@ -5,6 +5,7 @@
 # Local dev env
 venv
 .python-version
+.idea
 
 # Build/dist stuff
 .latest_release
