@@ -1,14 +1,10 @@
 import json
-import os
 import re
 import sys
 
 import splunk.Intersplunk as si
 
 ERROR_FIELD = "_jmespath_error"
-
-DIR = os.path.dirname(__file__)
-sys.path.append(os.path.join(DIR, "lib"))
 
 import jmespath
 from jmespath import functions
