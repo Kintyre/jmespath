@@ -8,6 +8,9 @@ export = system
 [commands/jmespath]
 export = system
 
+[props]
+export = system
+
 [searchbnf]
 export = system
 
