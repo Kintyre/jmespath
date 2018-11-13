@@ -7,7 +7,7 @@ Developers can access the full source code on [GitHub](https://github.com/Kintyr
 
 ## Syntax
 
-    jmespath <jmespath-string> [input=<field>] [output=<field>] [default=<string>]
+    jmespath "<jmespath-string>" [input=<field>] [output=<field>] [default=<string>]
 
 ## Examples
 
@@ -51,6 +51,23 @@ More information can be found here http://jmespath.org/
 
 Live Tutorials here:
 http://jmespath.org/tutorial.html
+
+
+## Quoting:
+
+Special care is needed for keys that contain unusual characters or symbols that interfere with the JMESPath syntax.  Fortunately, this isn't a problem for many json docs.  But when it is, simply wrapping the token in question in double quotes.  Keep in mind that since the entire `<jmespath-string>` is often already quoted to keep JMESPath and Splunk syntax separate, so the JMESPath double quotes themselves must be escaped.  Don't worry.  It's not that bad, take a look:
+
+Take an example, a json doc like this:
+
+```json
+{ "doc" : { "og:site_name": "LA Weekly" } }
+```
+
+If you want to pull out the `og:site_name` value, use a command like so:
+
+    ... | jmespath output=site "doc.\"og:site_name\""
+
+Without the double quotes, the `:` character would cause a parsing error.
 
 
 ## Support

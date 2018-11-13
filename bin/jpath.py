@@ -100,9 +100,10 @@ def sanitize_fieldname(field):
     # XXX: Add caching, if needed
     clean = re.sub(r'[^A-Za-z0-9_.{}\[\]]', "_", field)
     # Remove leading/trailing underscores
-    # It would be nice to preserve explicit underscores but don't wnat to complicate the code for
+    # It would be nice to preserve explicit underscores but don't want to complicate the code for
     # a not-yet-existing corner case.  Generally it's better to avoid hidden fields.
-    clean = clean.trim("_")
+    clean = clean.strip("_")
+    return clean
 
 
 def flatten(container):
@@ -143,6 +144,8 @@ if __name__ == '__main__':
             sys.exit(0)
         path = keywords[0]
 
+        # Handle literal (escaped) quotes.  Presumably necessary because of raw args?
+        path = path.replace(r'\"', '"')
         try:
             jp = jmespath.compile(path)
         except ParseError as e:
