@@ -14,8 +14,29 @@ from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
 # Custom functions for the JMSEPath language to make some typical splunk use cases easier to manage
 class JmesPathSplunkExtraFunctions(functions.Functions):
 
+    @functions.signature({'types': ['object']})
+    def _func_items(self, h):
+        """ JMESPath includes a keys() and a values(), but with unordered objects, there's no way
+        to line these up!  So this feels like an pretty obvious extension to a Python guy! """
+        #return [ [k,v] for k,v in h.items() ]
+        return list(h.items())
+
+    @functions.signature({'types': ['array']})
+    def _func_to_hash(self, array):
+        """ Send in an array of [key,value] pairs and build a hash.  If duplicates, the last value
+        for 'key' wins.
+        """
+        h = {}
+        for item in array:
+            try:
+                key, val = item
+                h[key] = val
+            except:
+                pass
+        return h
+
     @functions.signature({'types': ['string', 'array']})
-    def _func_parse(self, s):
+    def _func_from_string(self, s):
         """
         Possible name options:
             parse           Nice, but parse what?
