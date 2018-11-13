@@ -2,6 +2,9 @@
 
 JMESPath (pronounced "james path") allows you to declaratively specify how to extract elements from a JSON document.
 
+Splunk users can download and install the app from [SplunkBase](https://splunkbase.splunk.com/app/3237/).
+Developers can access the full source code on [GitHub](https://github.com/Kintyre/jmespath).
+
 ## Syntax
 
     jmespath <jmespath-string> [input=<field>] [output=<field>] [default=<string>]
@@ -53,9 +56,16 @@ http://jmespath.org/tutorial.html
 ## Support
 
 Community support is available on best-effort basis only.  For information about commercial support, contact [Kintyre](mailto:sales@kintyre.co)
-
+Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
+
+ * 1.9.1 (Nov 12, 2018) First public 2.0 release canadate  
+   * Add several custom functions to JMESPath core to simplify common Splunk data scenarios.
+   * *BREAKING CHANGE*:  Switched to use `spath` style arguments instead of `xpath` style.  (Technically a compability layer is in place, but I'm hoping not to keep that around too long.)
+   * Ensure that complex results are always returned as a JSON string, not as a python representation format.  This allows subsiquent processing with less hassle.
+   * Significant expansion of docs and UI feedback.
+
 
  * 1.0.2 (Nov 9, 2018) - Added logo
    * Add appIcon images to avoid AppInspect violations
