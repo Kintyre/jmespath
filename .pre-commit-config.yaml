@@ -27,3 +27,4 @@ repos:
   hooks:
     - id: ksconf-check
     - id: ksconf-sort
+      exclude: logging\.conf

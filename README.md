@@ -60,10 +60,10 @@ Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
 
- * 1.9.1 (Nov 12, 2018) First public 2.0 release canadate  
+ * 1.9.1 (Nov 12, 2018) First public 2.0 release candidate
    * Add several custom functions to JMESPath core to simplify common Splunk data scenarios.
-   * *BREAKING CHANGE*:  Switched to use `spath` style arguments instead of `xpath` style.  (Technically a compability layer is in place, but I'm hoping not to keep that around too long.)
-   * Ensure that complex results are always returned as a JSON string, not as a python representation format.  This allows subsiquent processing with less hassle.
+   * *BREAKING CHANGE*:  Switched to use `spath` style arguments instead of `xpath` style.  (Technically a compatibility layer is in place, but I'm hoping not to keep that around too long.)
+   * Ensure that complex results are always returned as a JSON string, not as a python representation format.  This allows subsequent processing with less hassle.
    * Significant expansion of docs and UI feedback.
 
 
