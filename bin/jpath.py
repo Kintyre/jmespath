@@ -118,13 +118,26 @@ def flatten(container):
         yield str(container)
 
 
+def legacy_args_fixer(options):
+    # Support legacy field names (xpath vs spath) field/outfield
+    argmap = [
+        ("input", "field"),
+        ("output", "outfield"),
+    ]
+    for (n_arg, o_arg) in argmap:
+        if o_arg in options and n_arg not in options:
+            # XXX:  Write a warning somewhere!
+            options[n_arg] = options[o_arg]
+
 
 if __name__ == '__main__':
     try:
         keywords, options = si.getKeywordsAndOptions()
+        legacy_args_fixer(options)
+
         defaultval = options.get('default', None)
-        field = options.get('field', '_raw')
-        outfield = options.get('outfield', 'jpath')
+        fn_input = options.get('input', options.get('field', '_raw'))
+        fn_output = options.get('output', 'jpath')
         if len(keywords) != 1:
             si.generateErrorResults('Requires exactly one path argument.')
             sys.exit(0)
@@ -142,7 +155,7 @@ if __name__ == '__main__':
         # for each results
         for result in results:
             # get field value
-            ojson = result.get(field, None)
+            ojson = result.get(fn_input, None)
             added = False
             if ojson is not None:
                 try:
@@ -152,7 +165,7 @@ if __name__ == '__main__':
                     continue
                 try:
                     values = jp.search(json_obj, options=jp_options)
-                    result[outfield] = list(flatten(values))
+                    result[fn_output] = list(flatten(values))
                     result[ERROR_FIELD] = None
                     added = True
                 except UnknownFunctionError as e:
@@ -167,7 +180,7 @@ if __name__ == '__main__':
                     result[ERROR_FIELD] = "Exception: {}".format(e)
 
             if not added and defaultval is not None:
-                result[outfield] = defaultval
+                result[fn_output] = defaultval
         si.outputResults(results)
     except Exception as e:
         import traceback

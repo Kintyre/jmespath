@@ -4,7 +4,7 @@ JMESPath (pronounced "james path") allows you to declaratively specify how to ex
 
 ## Syntax
 
-    jmespath <jmespath-string> [field=<field>] [outfield=<field>] [default=<string>]
+    jmespath <jmespath-string> [input=<field>] [output=<field>] [default=<string>]
 
 ## Examples
 
