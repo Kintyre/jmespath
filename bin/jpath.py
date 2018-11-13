@@ -119,6 +119,30 @@ def flatten(container):
         yield str(container)
 
 
+def output_to_field(values, output, record):
+    record[output] = list(flatten(values))
+
+
+def output_to_wildcard(values, output, record):
+    output_template = output.replace("*", "{}", 1)
+    if values is None:
+        # Don't bother to make any fields
+        return
+
+    if isinstance(values, dict):
+        for (key, value) in values.items():
+            final_field = output_template.format(sanitize_fieldname(key))
+            if isinstance(value, (list, dict, tuple)):
+                record[final_field] = json.dumps(value)
+            else:
+                record[final_field] = value
+    else:
+        # Fallback to using a silly name since there's no hash key to work with.
+        # (Maybe users didn't mean to use '*' in output, or possible record/data specific issue
+        final_field = output_template.format("anonymous")
+        record[final_field] = json.dumps(values)
+
+
 def legacy_args_fixer(options):
     # Support legacy field names (xpath vs spath) field/outfield
     argmap = [
@@ -146,6 +170,12 @@ if __name__ == '__main__':
 
         # Handle literal (escaped) quotes.  Presumably necessary because of raw args?
         path = path.replace(r'\"', '"')
+
+        if "*" in fn_output:
+            apply_output = output_to_wildcard
+        else:
+            apply_output = output_to_field
+
         try:
             jp = jmespath.compile(path)
         except ParseError as e:
@@ -168,7 +198,7 @@ if __name__ == '__main__':
                     continue
                 try:
                     values = jp.search(json_obj, options=jp_options)
-                    result[fn_output] = list(flatten(values))
+                    apply_output(values, fn_output, result)
                     result[ERROR_FIELD] = None
                     added = True
                 except UnknownFunctionError as e:
@@ -184,6 +214,7 @@ if __name__ == '__main__':
 
             if not added and defaultval is not None:
                 result[fn_output] = defaultval
+
         si.outputResults(results)
     except Exception as e:
         import traceback

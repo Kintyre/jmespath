@@ -39,6 +39,50 @@ The `*` can also be used for hash types:
 ```
 The expression: `foo.*.name` will return `["one", "two"]`.
 
+
+## Output modes
+
+The `jmmespath` search command has two different modes for handling output variables:  A named field or a wild carded field pattern.
+
+With a simple named field the output only one output field is updated.  If the result of the evaluated `<jmespath-string>` is a complex object, then a JSON formatted string is returned instead of raw value.  This is done to both preserve data accurately as well as allow for multistep processing where a JSON object may take multiple passes to fully process for the objective at hand.
+
+When a wild carded output field is given, then multiple output fields will be created using the wild card as a pattern.  In this case, it's necessary for the jmespath search command to assume that the result of the query expression will result in a hash (object) rather than a single value or array.  The hash keys will be combined with the given output pattern to make the final output field names.  The number of fields that will be created, depends completely on your data.  BTW, if a non-hash object is returned by your expression, then then your output field name will contain the word `anononymous` instead of a key name.
+
+### Example
+
+The following example demonstrates the different means of using the `output` field for the same given
+
+Json input:
+```json
+{ "colors" : 
+    {
+        "apple" : "yellow",
+        "snake" : "black",
+        "foobar" : "brown"
+    }
+}
+```
+
+Assuming the expression
+    ... | jmespath input=j <OUTPUT-OPTION> "colors"
+
+| ----------------- | ------------------ | ------- |
+| *<OUTPUT-OPTION>* | *field(s) created* | *notes* |
+| ----------------- | -------------------| ------- |
+| `output=colors`   | `colors`={ "apple": "yellow", "snake": "black", "foobar" : "brown" } | Simple static output.  The output is converted back to JSON since value is structured. |
+| `output=color.*`  | `color.apple`=yellow, `color.snake`=black, `color.foobar`=brown | The `color.` prefix is applied to all keys. |
+| `output=*_color`  | `apple_color`=yellow, `snake_color`=black, `foobar_color`=brown | The `_color` suffix is applied to all keys. |
+| `output=*`        | `apple`=yellow, `snake`=black, `foobar`=brown | Keys are used as is.  Note this could overwrite existing fields if they are already present. |
+
+A few takeaways:
+
+ * The static output makes it easy for of subsequent processing with additional `jmespath` or `spath` commands
+ * Prefix and suffix approaches allow for all fields to be easily grouped with other wildcard capable search commands (there are many of them.)  For example:  `stats values(color.*) as color.* by ...`, and they can all be cleaned up all at once using `| fields - color.*`.  This technique helps when taming exotic or erratic json objects.
+ * The behavior of `output=*` is generally similar to `spath` behavior however jmespath output only unwraps a single level.  That is  `{ "a": { "b": { "c": 1}}}` would return as `a.b`=`{"c":1}` for `jmespath`, where as `spath` would return `a.b.c` = `1`.  While this may seem less-helpful for this simple scenario, it's a feature!  Because consider what happens when `c` is a complex JSON object, rather than the number 1.  (And if you'd prefer to get `a.b.c`, then just use `spath`.)
+
+Not shown above is that the `jmsepath` search command will attempt to sanitize key names that are inappropriate for Splunk field names.  This could result in data loss (if your data contains both the keys "My Field" and "My-Field" in the same hash) and things like dots (`.`) in your field name could be handled in ways that aren't idea.  If you have thoughts on how to do it better, feel free to send bug reports and feature requests!  Pull requests welcome!
+
+
 ## What is this JMESPath?
 
 JMESPath is used prominently in a few other projects/tools that you have already used:

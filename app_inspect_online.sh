@@ -1,6 +1,7 @@
 #!/bin/bash
 # Really?!?! Why did I have to write this myself?  c'mon Splunk!!
 USERNAME=${USERNAME-lalleman}
+PACKAGE=${PACKAGE-$(<.latest_release)}
 
 # jp - jmsepath CLI tool.
 
@@ -27,11 +28,11 @@ then
     echo "export token=$token"
 fi
 
-echo "Uploading $(<.latest_release) to AppInspect via APIs"
+echo "Uploading $PACKAGE to AppInspect via APIs"
 curl -s -X POST \
      -H "Authorization: bearer $token" \
      -H "Cache-Control: no-cache" \
-     -F "app_package=@\"$(<.latest_release)\"" \
+     -F "app_package=@\"$PACKAGE\"" \
      --url "https://appinspect.splunk.com/v1/app/validate" -o "$t"
 cat "$t"
 echo
@@ -62,6 +63,13 @@ curl -s -X GET -H "Authorization: bearer $token" \
      -H "Cache-Control: no-cache" \
      --url "https://appinspect.splunk.com/v1/app/report/${request_id}" \
      -o "${RPT}"
+
+echo "Downloading HTML report."
+curl -s -X GET -H "Authorization: bearer $token" \
+     -H "Content-Type: text/html" \
+     -H "Cache-Control: no-cache" \
+     --url "https://appinspect.splunk.com/v1/app/report/${request_id}" \
+     -o "${RPT/.json/.html}"
 
 echo "Summary"
 jp -f "$RPT" 'reports[0].{name:app_name,description:app_description,author:app_author,version:app_version,hash:app_hash,appinspect_ver:run_parameters.appinspect_version}'
