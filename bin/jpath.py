@@ -106,11 +106,12 @@ def sanitize_fieldname(field):
 
 
 def flatten(container):
-    if isinstance(container, (list, tuple)):
+    if isinstance(container, dict):
+        yield json.dumps(container)
+    elif isinstance(container, (list,tuple)):
         for i in container:
-            if isinstance(i, (list, tuple)):
-                for j in flatten(i):
-                    yield str(j)
+            if isinstance(i, (list,tuple,dict)):
+                yield json.dumps(i)
             else:
                 yield str(i)
     else:
