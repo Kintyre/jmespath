@@ -1,10 +1,10 @@
-#JMESPath for Splunk
+# JMESPath for Splunk
 
 JMESPath (pronounced "james path") allows you to declaratively specify how to extract elements from a JSON document.
 
 ## Syntax
 
-    jmespath <jmespath-string> [input=<field>] [output=<field>] [default=<string>]
+    jmespath (jmespath-string) [field=(field)] [outfield=(field)] [default=(string)]
 
 ## Examples
 
@@ -57,20 +57,18 @@ Community support is available on best-effort basis only.  For information about
 
 ## History
 
- * 1.0.2 (Nov 9, 2018) - Added logo
-   * Add appIcon images to avoid AppInspect violations
+### 1.0.2 (Nov 9, 2018) - Added logo
+  * Add appIcon images to avoid AppInspect violations
+### 1.0.1 (Nov 9, 2018) - Lowell's first release (stability of existing code)
+  * Upgraded jmsepath python library to 0.9.3
+  * Added error reporting for JMESpath errors (JSON decoding errors are still silently ignored)
+  * Fixed bug where 'default' would overwrite query output
+  * Add inline help and hints to the UI (searchbnf)
+### 1.0 RC2 (July 26, 2016) - Pre-release by John Berwick
+  * Add flatten procedure
+### 1.0 RC (July 24, 2016) - Pre-release by John Berwick
+  * First public release
 
- * 1.0.1 (Nov 9, 2018) - Lowell's first release (stability of existing code)
-   * Upgraded jmsepath python library to 0.9.3
-   * Added error reporting for JMESpath errors (JSON decoding errors are still silently ignored)
-   * Fixed bug where 'default' would overwrite query output
-   * Add inline help and hints to the UI (searchbnf)
-
- * 1.0 RC2 (July 26, 2016) - Pre-release by John Berwick
-   * Add flatten procedure
-
- * 1.0 RC (July 24, 2016) - Pre-release by John Berwick
-   * First public release
 
 
 ## Credits

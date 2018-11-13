@@ -1,0 +1,8 @@
+JMESPath for Splunk is an xpath search command for the JSON format.
+
+JMESPath uses the same syntax as the spath search command but with more advanced features like wildcards.
+
+More Information and Tutorials on the jmespath library can be found here:
+http://jmespath.org/
+
+Please direct all issues and enhancements via GitHub issues. Or ping me @lowell on Splunk's usergroup Slack. Code and more available here: https://github.com/Kintyre/jmespath/
