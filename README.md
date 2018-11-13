@@ -59,6 +59,11 @@ Community support is available on best-effort basis only.  For information about
 Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
+ 
+ * 1.9.2 (Nov 13, 2018) Second public 2.0 release candidate
+   * Adds secondary search command:  jsonformat
+    * Supports formatting JSON events and/or fields, syntax validation, control over key ordering and so on.  (Also contains an Easter egg where it can convert a python repr string into a valid JSON object, helpful for debugging splunklib searchcommand logs.)
+   * Adds the Splunk Python SDK (1.6.5) for use with `jsonformat` and eventually `jmespath`.
 
  * 1.9.1 (Nov 12, 2018) First public 2.0 release candidate
    * Add several custom functions to JMESPath core to simplify common Splunk data scenarios.
