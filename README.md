@@ -1,4 +1,4 @@
-#JMESPath for Splunk
+# JMESPath for Splunk
 
 JMESPath (pronounced "james path") allows you to declaratively specify how to extract elements from a JSON document.
 
