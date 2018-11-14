@@ -120,7 +120,15 @@ def flatten(container):
 
 
 def output_to_field(values, output, record):
-    record[output] = list(flatten(values))
+    content = list(flatten(values))
+    if not content:
+        content = None
+        record[output] = None
+    elif len(content) == 1:
+        # Avoid the overhead of MV field encoding
+        content  = content[0]
+    record[output] = content
+
 
 
 def output_to_wildcard(values, output, record):
@@ -132,7 +140,16 @@ def output_to_wildcard(values, output, record):
     if isinstance(values, dict):
         for (key, value) in values.items():
             final_field = output_template.format(sanitize_fieldname(key))
-            if isinstance(value, (list, dict, tuple)):
+            if isinstance(value, (list, tuple)):
+                if not value:
+                    value = None
+                elif len(value) == 1:
+                    # Unroll, to better match Splunk's default handling of mvfields
+                    value = value[0]
+                else:
+                    value = json.dumps(value)
+                record[final_field] = value
+            elif isinstance(value, dict):
                 record[final_field] = json.dumps(value)
             else:
                 record[final_field] = value
