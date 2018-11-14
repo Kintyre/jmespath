@@ -191,6 +191,9 @@ if __name__ == '__main__':
             ojson = result.get(fn_input, None)
             added = False
             if ojson is not None:
+                if isinstance(ojson, (list, tuple)):
+                    # XXX: Add proper support for multivalue input fields.  Just use first value for now
+                    ojson = ojson[0]
                 try:
                     json_obj = json.loads(ojson)
                 except ValueError:

@@ -92,6 +92,9 @@ class JsonFormatCommand(StreamingCommand):
             errors = []
             for (src_field, dest_field) in fieldpairs:
                 json_string = record.get(src_field, None)
+                if isinstance(json_string, (list, tuple)):
+                    # XXX: Add proper support for multivalue input fields.  For now, skip.
+                    json_string = None
                 if json_string:
                     try:
                         data = json_loads(json_string)
