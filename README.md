@@ -44,9 +44,9 @@ The expression: `foo.*.name` will return `["one", "two"]`.
 
 The `jmmespath` search command has two different modes for handling output variables:  A named field or a wild carded field pattern.
 
-With a simple named field the output only one output field is updated.  If the result of the evaluated `<jmespath-string>` is a complex object, then a JSON formatted string is returned instead of raw value.  This is done to both preserve data accurately as well as allow for multistep processing where a JSON object may take multiple passes to fully process for the objective at hand.
+With a named output field only that specific field is updated.  If the result of the evaluated `<jmespath-string>` is a complex object, then a JSON formatted string is returned instead of raw value.  This preserves data accuracy and allow for multistep processing when necessary.
 
-When a wild carded output field is given, then multiple output fields will be created using the wild card as a pattern.  In this case, it's necessary for the jmespath search command to assume that the result of the query expression will result in a hash (object) rather than a single value or array.  The hash keys will be combined with the given output pattern to make the final output field names.  The number of fields that will be created, depends completely on your data.  BTW, if a non-hash object is returned by your expression, then then your output field name will contain the word `anononymous` instead of a key name.
+When a wildcarded output field is given, multiple output fields are be created using the wildcard as a field template or pattern.  In this case, it's necessary for the jmespath search command to assume that the result of the query expression will result in a hash (object) rather than a single value or array.  The hash keys will be combined with the given output pattern to make the final output field names.  The number of fields that will be created, depends completely on your data.
 
 ### Example
 
@@ -64,11 +64,11 @@ Json input:
 ```
 
 Assuming the expression
-    ... | jmespath input=j <OUTPUT-OPTION> "colors"
 
+    ... | jmespath input=j OUTPUT-OPTION "colors"
+
+| *OUTPUT-OPTION* | *field(s) created* | *notes* |
 | ----------------- | ------------------ | ------- |
-| *<OUTPUT-OPTION>* | *field(s) created* | *notes* |
-| ----------------- | -------------------| ------- |
 | `output=colors`   | `colors`={ "apple": "yellow", "snake": "black", "foobar" : "brown" } | Simple static output.  The output is converted back to JSON since value is structured. |
 | `output=color.*`  | `color.apple`=yellow, `color.snake`=black, `color.foobar`=brown | The `color.` prefix is applied to all keys. |
 | `output=*_color`  | `apple_color`=yellow, `snake_color`=black, `foobar_color`=brown | The `_color` suffix is applied to all keys. |
@@ -76,12 +76,15 @@ Assuming the expression
 
 A few takeaways:
 
- * The static output makes it easy for of subsequent processing with additional `jmespath` or `spath` commands
- * Prefix and suffix approaches allow for all fields to be easily grouped with other wildcard capable search commands (there are many of them.)  For example:  `stats values(color.*) as color.* by ...`, and they can all be cleaned up all at once using `| fields - color.*`.  This technique helps when taming exotic or erratic json objects.
+ * The static output makes it easy for subsequent processing with additional `jmespath` or `spath` commands
+ * Prefix and suffix approaches allow fields to be easily grouped with other wildcard capable search commands.  For example:  `stats values(color.*) as color.* by ...`, and they can all be cleaned up all at once using `| fields - color.*`.  This technique helps when taming exotic or erratic json objects.
  * The behavior of `output=*` is generally similar to `spath` behavior however jmespath output only unwraps a single level.  That is  `{ "a": { "b": { "c": 1}}}` would return as `a.b`=`{"c":1}` for `jmespath`, where as `spath` would return `a.b.c` = `1`.  While this may seem less-helpful for this simple scenario, it's a feature!  Because consider what happens when `c` is a complex JSON object, rather than the number 1.  (And if you'd prefer to get `a.b.c`, then just use `spath`.)
 
-Not shown above is that the `jmsepath` search command will attempt to sanitize key names that are inappropriate for Splunk field names.  This could result in data loss (if your data contains both the keys "My Field" and "My-Field" in the same hash) and things like dots (`.`) in your field name could be handled in ways that aren't idea.  If you have thoughts on how to do it better, feel free to send bug reports and feature requests!  Pull requests welcome!
+### Other notes
 
+In wildcared mode, if a non-hash object is returned by your expression, then the output field will contain the word `anononymous` instead of a key name.  This seemed like a better option than dropping the data or using the literal `output` values, since it contains a `*` character.
+
+The `jmsepath` search command will attempt to sanitize key names that are inappropriate for Splunk field names.  This could result in data loss (if your data contains both the keys "My Field" and "My-Field" in the same hash) and things like dots (`.`) in your field name could be handled in ways that aren't idea.  If you have thoughts on how to do it better, feel free to send bug reports and feature requests!  Pull requests welcome!
 
 ## What is this JMESPath?
 
@@ -97,7 +100,7 @@ Live Tutorials here:
 http://jmespath.org/tutorial.html
 
 
-## Quoting:
+## Quoting
 
 Special care is needed for keys that contain unusual characters or symbols that interfere with the JMESPath syntax.  Fortunately, this isn't a problem for many json docs.  But when it is, simply wrapping the token in question in double quotes.  Keep in mind that since the entire `<jmespath-string>` is often already quoted to keep JMESPath and Splunk syntax separate, so the JMESPath double quotes themselves must be escaped.  Don't worry.  It's not that bad, take a look:
 
@@ -120,6 +123,11 @@ Community support is available on best-effort basis only.  For information about
 Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
+
+ * 1.9.3 (Nov 13, 2018) Third public 2.0 release candidate
+   * Adds wildcard support for the `output` argument.  This allows hashes to be expanded into multiple output fields in one invocation to `jmespath`
+   * Fixed bug in the `unroll()` function.
+   * Added support for quoting within the JMESpath expression, thus allowing support for keys that contain symbols.
  
  * 1.9.2 (Nov 13, 2018) Second public 2.0 release candidate
    * Adds secondary search command:  jsonformat
