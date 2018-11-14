@@ -123,6 +123,12 @@ Community support is available on best-effort basis only.  For information about
 Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
+ 
+
+ * 1.9.4 (Nov 13, 2018) Fourth public 2.0 release candidate
+   * Fix bug with mvlist inputs.  (More of a just-dont-crash-workaround for the moment).
+   * Enhance output so that mvfields are only used as needed.   Also eliminated the scenario where a single value could be unnecessarily wrapped in a single item list
+and therefore be returned as a JSON string.
 
  * 1.9.3 (Nov 13, 2018) Third public 2.0 release candidate
    * Adds wildcard support for the `output` argument.  This allows hashes to be expanded into multiple output fields in one invocation to `jmespath`
