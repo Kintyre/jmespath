@@ -59,7 +59,6 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
     def _func_unroll(self, objs, key, value):
         """ What to call this"?
             unroll
-            to_hash     Called hash in JSON
             zipdict     ?
             kvarray2hash    a bit long
             xyseries    haha

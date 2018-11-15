@@ -5,6 +5,9 @@ JMESPath (pronounced "james path") allows you to declaratively specify how to ex
 Splunk users can download and install the app from [SplunkBase](https://splunkbase.splunk.com/app/3237/).
 Developers can access the full source code on [GitHub](https://github.com/Kintyre/jmespath).
 
+
+Checkout the collection of [jmespath example searches](https://github.com/Kintyre/jmespath/wiki/jmsepath-search-examples) in the docs.
+
 ## Syntax
 
     jmespath "<jmespath-string>" [input=<field>] [output=<field>] [default=<string>]
@@ -119,13 +122,13 @@ Without the double quotes, the `:` character would cause a parsing error.
 
 ## Support
 
-Community support is available on best-effort basis only.  For information about commercial support, contact [Kintyre](mailto:sales@kintyre.co)
+Community support is available on best-effort basis only.  For information about commercial support, contact [Kintyre](mailto:hello@kintyre.co)
 Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
  
 
- * 1.9.4 (Nov 13, 2018) Fourth public 2.0 release candidate
+ * 1.9.4 (Nov 14, 2018) Fourth public 2.0 release candidate
    * Fix bug with mvlist inputs.  (More of a just-dont-crash-workaround for the moment).
    * Enhance output so that mvfields are only used as needed.   Also eliminated the scenario where a single value could be unnecessarily wrapped in a single item list
 and therefore be returned as a JSON string.
