@@ -2,8 +2,7 @@
 
 JMESPath (pronounced "james path") allows you to declaratively specify how to extract elements from a JSON document.
 
-Splunk users can download and install the app from [SplunkBase](https://splunkbase.splunk.com/app/3237/).
-Developers can access the full source code on [GitHub](https://github.com/Kintyre/jmespath).
+Splunk users can download and install the app from [SplunkBase](https://splunkbase.splunk.com/app/3237/).  Developers can access the full source code on [GitHub](https://github.com/Kintyre/jmespath).
 
 Checkout the collection of [jmespath example searches](https://github.com/Kintyre/jmespath/wiki/jmsepath-search-examples) in the docs.
 

@@ -2,8 +2,8 @@
 
 JMESPath (pronounced "james path") makes dealing with JSON data in Splunk easier by leveraging a standardized query language for JSON.  This allows you to declaratively specify how to extract elements from a JSON document.  In many ways, this is a better `spath`.
 
-Splunk users can download and install the app from [SplunkBase](https://splunkbase.splunk.com/app/3237/).
-Developers can access the full source code on [GitHub](https://github.com/Kintyre/jmespath).
+Splunk users can download and install the latest release from [SplunkBase](https://splunkbase.splunk.com/app/3237/).
+Developers can access and contribute to this app on [GitHub](https://github.com/Kintyre/jmespath).
 
 ## Syntax
 
@@ -22,9 +22,18 @@ See the [Install an add-on](https://docs.splunk.com/Documentation/AddOns/release
 
 JMESPath is used prominently in a few other projects/tools that you have already used:
 
- * [AWS CLI --query][jp-example-aws] option reduces the need for external JSON processing
+ * Both [AWS][jp-example-aws] and the Azure's [az][jp-example-azure] CLI tools use JMESPath for their `--query` filter to reduce external JSON processing
  * [Ansible json_query()][jp-example-ansible] filters allow for complex structures to be converted into simple loops
- * [jp][jp-example-jp] CLI tool is the command line interface for JMESPath.  (Not to be confused with `jq`, which uses a different syntax.)
+ * [jp][jp-example-jp] CLI tool is the command line interface for JMESPath
+
+### What JMESPath is NOT
+
+Be careful not to confuse JMESPath with the following.  While they all share some commonalities:
+
+ * The `jq` command
+ * jsonpath
+ * Splunk's `spath` command.
+
 
 More information can be found here http://jmespath.org/
 
@@ -48,4 +57,5 @@ See the full [Change log](https://github.com/Kintyre/jmespath/wiki/Change-Log)
 
 [jp-example-ansible]: https://docs.ansible.com/ansible/2.7/user_guide/playbooks_filters.html#json-query-filter
 [jp-example-aws]: https://docs.aws.amazon.com/cli/latest/userguide/controlling-output.html#controlling-output-filter
+[jp-example-azure]: https://docs.microsoft.com/en-us/cli/azure/query-azure-cli?view=azure-cli-latest
 [jp-example-jp]: https://github.com/jmespath/jp
