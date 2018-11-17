@@ -18,27 +18,6 @@ Full documentation regarding this app, how to use it, along with various tips an
 
 See the [Install an add-on](https://docs.splunk.com/Documentation/AddOns/released/Overview/Singleserverinstall) in Splunk's official documentation.  There are no extra install steps.  No configuration is required.
 
-## What is this JMESPath?
-
-JMESPath is used prominently in a few other projects/tools that you have already used:
-
- * Both [AWS][jp-example-aws] and the Azure's [az][jp-example-azure] CLI tools use JMESPath for their `--query` filter to reduce external JSON processing
- * [Ansible json_query()][jp-example-ansible] filters allow for complex structures to be converted into simple loops
- * [jp][jp-example-jp] CLI tool is the command line interface for JMESPath
-
-### What JMESPath is NOT
-
-Be careful not to confuse JMESPath with the following.  While they all share some commonalities:
-
- * The `jq` command
- * jsonpath
- * Splunk's `spath` command.
-
-
-More information can be found here http://jmespath.org/
-
-Live Tutorials here:
-http://jmespath.org/tutorial.html
 
 ## Support
 
@@ -55,7 +34,3 @@ See the full [Change log](https://github.com/Kintyre/jmespath/wiki/Change-Log)
  * James Saryerwinnie:  author of [JMESPath](https://pypi.org/project/jmespath/) Python library
  * Mike Rybar: Logo
 
-[jp-example-ansible]: https://docs.ansible.com/ansible/2.7/user_guide/playbooks_filters.html#json-query-filter
-[jp-example-aws]: https://docs.aws.amazon.com/cli/latest/userguide/controlling-output.html#controlling-output-filter
-[jp-example-azure]: https://docs.microsoft.com/en-us/cli/azure/query-azure-cli?view=azure-cli-latest
-[jp-example-jp]: https://github.com/jmespath/jp
