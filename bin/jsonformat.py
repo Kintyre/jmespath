@@ -46,6 +46,12 @@ class JsonFormatCommand(StreamingCommand):
             "(literals only).  In this mode, the 'preserve' order option will not work.",
         require=False, default="json", validate=validators.Set("json", "python"))
 
+    output_mode = Option(
+        doc="Select an alternate output mode.  Supports 'json' (the default) and 'makeresults' "
+            "which allows easy creation of run-anywhere sample of a json object.  "
+            "You can paste the output to Splunk Answers when requesting help with JSON processing.",
+        require=False, default="json", validate=validators.Set("json", "makeresults"))
+
     @staticmethod
     def handle_field_as(fieldnames):
         """ Convert a list of fields, which may include "a as b" style renaming into a more usable
@@ -86,6 +92,28 @@ class JsonFormatCommand(StreamingCommand):
                 self.logger.info("Mapping JSON field {} -> {}".format(src_field, dest_field))
         self.logger.info("fieldpairs={}".format(fieldpairs))
 
+        def output_json(json_string):
+            # Normal mode.  Just load and dump json
+            data = json_loads(json_string)
+            return json_dumps(data)
+
+        def output_makeresults(json_string):
+            # Build a "makeresults" (run-anywhere) output sample
+            quote_chars = ('\\', "\n", "\t", '"')       # Order matters
+            try:
+                data = json_loads(json_string)
+                json_min = json.dumps(data, indent=0, separators=(",", ":"))
+                for char in quote_chars:
+                    json_min = json_min.replace(char, "\\" + char)
+                return '| makeresults | eval {}="{}"'.format(src_field, json_min)
+            except ValueError as e:
+                return "ERROR:  {!r}   {}".format(json_string, e)
+
+        if self.output_mode == "json":
+            output = output_json
+        elif self.output_mode == "makeresults":
+            output = output_makeresults
+
         first_row = True
 
         for record in records:
@@ -97,8 +125,7 @@ class JsonFormatCommand(StreamingCommand):
                     json_string = None
                 if json_string:
                     try:
-                        data = json_loads(json_string)
-                        text = json_dumps(data)
+                        text = output(json_string)
                         record[dest_field] = text
                         # Handle special case for _raw message update
                         if dest_field == "_raw":
