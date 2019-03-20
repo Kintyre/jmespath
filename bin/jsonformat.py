@@ -35,7 +35,7 @@ class JsonFormatCommand(StreamingCommand):
 
     order = Option(
         doc="Pick order options.  undefined (default), preserve, or sort.  Only impacts hash order",
-        require=False, default="undefined", validate=validators.Set("undefined", "preserve", "sort"))
+        require=False, default="preserve", validate=validators.Set("undefined", "preserve", "sort"))
 
     errors = Option(
         doc="field name to capture any parsing error messages.",

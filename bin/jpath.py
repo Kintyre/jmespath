@@ -18,7 +18,6 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
     def _func_items(self, h):
         """ JMESPath includes a keys() and a values(), but with unordered objects, there's no way
         to line these up!  So this feels like an pretty obvious extension to a Python guy! """
-        #return [ [k,v] for k,v in h.items() ]
         return list(h.items())
 
     @functions.signature({'types': ['array']})
@@ -45,7 +44,6 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
             unnest          Can't get past the double "n"s
             jsonstr         My first option, but don't like it.
         """
-        # XXX: Figure out how to make this properly support (pass-through) a 'null' type
         if s is None:
             return None
         if isinstance(s, (list,tuple)):
@@ -88,7 +86,7 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
                 continue
             except Exception as e:
                 # FOR DEBUGGING ONLY
-                return "ERROR:  Couldn't find key={} value={} in {}".format(key, value, item)
+                return "ERROR:  {}  key={} value={} in {}".format(e, key, value, item)
         return d
 
 
@@ -125,9 +123,8 @@ def output_to_field(values, output, record):
         record[output] = None
     elif len(content) == 1:
         # Avoid the overhead of MV field encoding
-        content  = content[0]
+        content = content[0]
     record[output] = content
-
 
 
 def output_to_wildcard(values, output, record):
@@ -171,7 +168,7 @@ def legacy_args_fixer(options):
             options[n_arg] = options[o_arg]
 
 
-if __name__ == '__main__':
+def jpath():
     try:
         keywords, options = si.getKeywordsAndOptions()
         legacy_args_fixer(options)
@@ -240,3 +237,7 @@ if __name__ == '__main__':
 
         stack = traceback.format_exc()
         si.generateErrorResults("Error '%s'. %s" % (e, stack))
+
+
+if __name__ == '__main__':
+    jpath()
