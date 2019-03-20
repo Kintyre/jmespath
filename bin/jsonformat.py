@@ -115,6 +115,7 @@ class JsonFormatCommand(StreamingCommand):
             output = output_makeresults
 
         first_row = True
+        linecount_set = False
 
         for record in records:
             errors = []
@@ -129,8 +130,9 @@ class JsonFormatCommand(StreamingCommand):
                         record[dest_field] = text
                         # Handle special case for _raw message update
                         if dest_field == "_raw":
-                            record["linecount"] = len(text.splitlines())
-                        del data
+                            if "linecount" in record:
+                                record["linecount"] = len(text.splitlines())
+                                linecount_set = True
                     except ValueError as e:
                         if len(fieldpairs) > 1:
                             errors.append("Field {} error:  {}".format(src_field, e.message))
@@ -147,7 +149,7 @@ class JsonFormatCommand(StreamingCommand):
             if first_row:
                 first_row = False
                 needed_fields = [ df for (sf, df) in fieldpairs ]
-                if "_raw" in needed_fields:
+                if linecount_set:
                     needed_fields.append("linecount")
                 for f in needed_fields:
                     if f not in record:
