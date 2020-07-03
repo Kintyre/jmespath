@@ -256,7 +256,7 @@ class SearchCommand(object):
         invocation.
 
         :return: Search results info:const:`None`, if the search results info file associated with the command
-        invocation is inaccessible.
+                 invocation is inaccessible.
         :rtype: SearchResultsInfo or NoneType
 
         """
@@ -338,6 +338,7 @@ class SearchCommand(object):
         specifying this pair of configuration settings in commands.conf:
 
            .. code-block:: python
+
                enableheader = true
                requires_srinfo = true
 
@@ -345,8 +346,8 @@ class SearchCommand(object):
         :code:`requires_srinfo` setting is false by default. Hence, you must set it.
 
         :return: :class:`splunklib.client.Service`, if :code:`enableheader` and :code:`requires_srinfo` are both
-        :code:`true`. Otherwise, if either :code:`enableheader` or :code:`requires_srinfo` are :code:`false`, a value
-        of :code:`None` is returned.
+            :code:`true`. Otherwise, if either :code:`enableheader` or :code:`requires_srinfo` are :code:`false`, a value
+            of :code:`None` is returned.
 
         """
         if self._service is not None:
@@ -809,15 +810,15 @@ class SearchCommand(object):
         :param name: Name of the metric.
         :type name: basestring
 
-        :param value: A 4-tuple containing the value of metric :param:`name` where
+        :param value: A 4-tuple containing the value of metric ``name`` where
 
             value[0] = Elapsed seconds or :const:`None`.
             value[1] = Number of invocations or :const:`None`.
             value[2] = Input count or :const:`None`.
             value[3] = Output count or :const:`None`.
 
-        The :data:`SearchMetric` type provides a convenient encapsulation of :param:`value`.
-        The :data:`SearchMetric` type provides a convenient encapsulation of :param:`value`.
+        The :data:`SearchMetric` type provides a convenient encapsulation of ``value``.
+        The :data:`SearchMetric` type provides a convenient encapsulation of ``value``.
 
         :return: :const:`None`.
 
@@ -1035,6 +1036,8 @@ class SearchCommand(object):
             """
             return
 
+        # TODO: Stop looking like a dictionary because we don't obey the semantics
+        # N.B.: Does not use Python 2 dict copy semantics
         def iteritems(self):
             definitions = type(self).configuration_setting_definitions
             version = self.command.protocol_version
@@ -1043,7 +1046,9 @@ class SearchCommand(object):
                     lambda setting: (setting.name, setting.__get__(self)), ifilter(
                         lambda setting: setting.is_supported_by_protocol(version), definitions)))
 
-        items = iteritems
+        # N.B.: Does not use Python 3 dict view semantics
+        if not six.PY2:
+            items = iteritems
 
         pass  # endregion
 
@@ -1051,6 +1056,7 @@ class SearchCommand(object):
 
 
 SearchMetric = namedtuple('SearchMetric', ('elapsed_seconds', 'invocation_count', 'input_count', 'output_count'))
+
 
 
 def dispatch(command_class, argv=sys.argv, input_file=sys.stdin, output_file=sys.stdout, module_name=None):
@@ -1080,7 +1086,7 @@ def dispatch(command_class, argv=sys.argv, input_file=sys.stdin, output_file=sys
 
     **Example**
 
-    .. code-block:: python
+    ..  code-block:: python
         :linenos:
 
         #!/usr/bin/env python
@@ -1096,7 +1102,7 @@ def dispatch(command_class, argv=sys.argv, input_file=sys.stdin, output_file=sys
 
     **Example**
 
-    .. code-block:: python
+    ..  code-block:: python
         :linenos:
 
         from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
