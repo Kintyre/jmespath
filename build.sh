@@ -5,6 +5,9 @@ APP="jmespath"
 BUILD="build/$APP"
 VER=$(grep version default/app.conf | cut -f2 -d=)
 VER=${VER/ /}
+if [[ $(git status --porcelain | grep -v "^\?") != '' ]]; then
+    VER=${VER}-dirty
+fi
 TARBALL=jmespath-for-splunk-${VER}.tgz
 echo "Building JMESPath for Splunk ${VER}"
 echo
