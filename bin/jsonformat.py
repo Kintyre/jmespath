@@ -5,10 +5,14 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import ast
 import sys
-from collections import OrderedDict
+import json
 from functools import partial
 
-import json
+if sys.version_info >= (3, 7):
+    # Small optimization for Python 3; no need for OrderedDict
+    OrderedDict = dict
+else:
+    from collections import OrderedDict
 
 from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
 
@@ -18,6 +22,7 @@ def from_python(s):
         return ast.literal_eval(s)
     except SyntaxError as e:
         raise ValueError(e.msg)
+
 
 @Configuration()
 class JsonFormatCommand(StreamingCommand):
