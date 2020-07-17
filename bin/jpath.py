@@ -30,7 +30,7 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
             try:
                 key, val = item
                 h[key] = val
-            except:
+            except Exception:
                 pass
         return h
 
@@ -50,7 +50,7 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
             return [ json.loads(i) for i in s ]
         try:
             return json.loads(s)
-        except:
+        except Exception:
             return s
 
     @functions.signature({'types': ['array']}, {'types':['string']}, {'types':['string']})
@@ -84,6 +84,8 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
             except KeyError:
                 # If either field is missing, just silently move on
                 continue
+            except NameError:
+                raise
             except Exception as e:
                 # FOR DEBUGGING ONLY
                 return "ERROR:  {}  key={} value={} in {}".format(e, key, value, item)
@@ -151,7 +153,7 @@ def output_to_wildcard(values, output, record):
                 record[final_field] = value
     else:
         # Fallback to using a silly name since there's no hash key to work with.
-        # (Maybe users didn't mean to use '*' in output, or possible record/data specific issue
+        # (Maybe users didn't mean to use '*' in output, or possibly a record/data specific issue
         final_field = output_template.format("anonymous")
         record[final_field] = json.dumps(values)
 
