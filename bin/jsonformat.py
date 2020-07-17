@@ -102,7 +102,7 @@ class JsonFormatCommand(StreamingCommand):
             quote_chars = ('\\', "\n", "\t", '"')       # Order matters
             try:
                 data = json_loads(json_string)
-                json_min = json.dumps(data, indent=0, separators=(",", ":"))
+                json_min = json.dumps(data, indent=None, separators=(",", ":"))
                 for char in quote_chars:
                     json_min = json_min.replace(char, "\\" + char)
                 return '| makeresults | eval {}="{}"'.format(src_field, json_min)
