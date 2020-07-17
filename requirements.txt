@@ -1,0 +1,2 @@
+splunk-sdk==1.6.13
+jmespath==0.10.0

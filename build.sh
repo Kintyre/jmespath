@@ -17,7 +17,7 @@ mkdir -p "$BUILD"
 
 echo "Creating build into $BUILD"
 cp -a ./*.md bin default metadata static "$BUILD"
-find "$BUILD" -name '*.py[co]' -delete
+find "$BUILD" \( -name '*.py[co]' -o -name '__pycache__' -o -name '*.log*' \) -delete
 find "$BUILD" -name '.DS_Store' -delete
 
 echo "Exporting to $TARBALL"
