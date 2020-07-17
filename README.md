@@ -12,7 +12,7 @@ Developers can access and contribute to this app on [GitHub](https://github.com/
 
 ## Documentation
 
-Full documentation regarding this app, how to use it, along with various tips and tricks about how to best extract and format your JSON events is available on the GitHub wiki page.  See the official [JMESPath for Splunk documention](https://github.com/Kintyre/jmespath/wiki/).  Many "run-anywhere examples are provided throughout to help new users get a solid understanding of this tool.
+Full documentation regarding this app, how to use it, along with various tips and tricks about how to best extract and format your JSON events is available on the GitHub wiki page.  See the official [JMESPath for Splunk documentation](https://github.com/Kintyre/jmespath/wiki/).  Many "run-anywhere" examples are provided throughout to help new users get a solid understanding of this tool.
 
 ## Installation & Configuration
 
@@ -21,7 +21,7 @@ See the [Install an add-on](https://docs.splunk.com/Documentation/AddOns/release
 
 ## Support
 
-Community support is available on best-effort basis only.  For information about commercial support, contact [Kintyre](mailto:hello@kintyre.co)
+Community support is available on best-effort basis.  For information about commercial support, contact [Kintyre](mailto:hello@kintyre.co).
 Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
 
 ## History
@@ -30,7 +30,8 @@ See the full [Change log](https://github.com/Kintyre/jmespath/wiki/Change-Log)
 
 ## Credits
 
- * John Berwick: the original author of this Splunk app
- * James Saryerwinnie:  author of [JMESPath](https://pypi.org/project/jmespath/) Python library
+ * John Berwick: original author of this Splunk app
+ * Lowell Alleman: current maintainer
+ * James Saryerwinnie: author of [JMESPath](https://pypi.org/project/jmespath/) Python library
  * Mike Rybar: Logo
 
