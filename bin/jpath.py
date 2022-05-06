@@ -19,7 +19,7 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
     def _func_items(self, h):
         """ JMESPath includes a keys() and a values(), but with unordered objects, there's no way
         to line these up!  So this feels like an pretty obvious extension to a Python guy! """
-        return list(h.items())
+        return [list(item) for item in h.items()]
 
     @functions.signature({'types': ['array']})
     def _func_to_hash(self, array):
