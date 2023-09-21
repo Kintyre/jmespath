@@ -37,7 +37,11 @@
             }
         }
     ],
-    "layer_mounts": [],
+    "layer_mounts": [
+         "default",
+         "metadata",
+         "bin"
+],
     "source": {
         "repo": "git@github.com:Kintyre/cypress-cookiecutter.git",
         "rev": "v1.10.5"
