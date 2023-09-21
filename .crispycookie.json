@@ -17,7 +17,7 @@
                 "on_splunkbase": true,
                 "splunkbase_id": "3237",
                 "git_repo": "https://github.com/Kintyre/jmespath",
-                "git_branch": "master",
+                "git_branch": "main",
                 "_use_pre_release": false
             }
         },
@@ -63,6 +63,6 @@
     },
     "tool_info": {
         "program": "CrispyCookie",
-        "version": "0.7.2"
+        "version": "0.7.3"
     }
 }

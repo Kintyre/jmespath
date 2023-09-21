@@ -36,7 +36,7 @@ The above command will build and (re)install the app into a running Splunk devel
 The app version number can be updated using the `bumpversion` and pushed upstream using `git`.  Here's a common example:
 
     bumpversion patch    # <-- Pick major, minor, patch
-    git push origin master --tags
+    git push origin main --tags
 
 ## Tools
 
