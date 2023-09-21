@@ -1,0 +1,3 @@
+[pycodestyle]
+# Settings for autopep8
+max_line_length = 100

@@ -1,0 +1,49 @@
+{
+    "layers": [
+        {
+            "name": "app-python",
+            "layer_name": "20-base",
+            "cookiecutter": {
+                "vendor": "Jmespath",
+                "vendor_product": "Jmespath",
+                "has_ui": false,
+                "app_folder": "jmespath",
+                "app_label": "JMESPath for Splunk",
+                "build_tool": "GitHub_Actions",
+                "bump_workflow": true,
+                "author_splunkid": "kintyre",
+                "author_email": "splunkbase@kintyre.co",
+                "author_company": "Kintyre",
+                "on_splunkbase": true,
+                "splunkbase_id": "3237",
+                "git_repo": "https://github.com/Kintyre/jmespath",
+                "git_branch": "master",
+                "_use_pre_release": false
+            }
+        },
+        {
+            "name": "search-command",
+            "layer_name": "50-spl",
+            "cookiecutter": {
+                "spl_class": "JsonFormatCommand",
+                "spl_script": "jsonformat",
+                "spl_command": "jsonformat",
+                "spl_type": "Streaming",
+                "need_logging": true,
+                "need_auth": false,
+                "conf_name": "jsonformat",
+                "conf_type": "entity",
+                "json_output": true
+            }
+        }
+    ],
+    "layer_mounts": [],
+    "source": {
+        "repo": "git@github.com:Kintyre/cypress-cookiecutter.git",
+        "rev": "v1.10.5"
+    },
+    "tool_info": {
+        "program": "CrispyCookie",
+        "version": "0.7.2"
+    }
+}

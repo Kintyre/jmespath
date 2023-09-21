@@ -1,0 +1,33 @@
+# General excludes
+*.bak
+*.tmp
+.*.swp
+*.log
+*~
+*.DS_Store
+
+
+# Build artifacts
+build/
+build.cache/
+dist/
+lib/
+.release_path
+.release_name
+
+# IDE / Editors
+.idea
+.vscode/
+
+
+# Python / dev
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv
+venv
+.python-version
+pip-log.txt
+*.dist-info/
+*.egg-info/

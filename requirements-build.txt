@@ -1,0 +1,4 @@
+ksconf>=0.11,<0.13
+
+# Core runtime requirements
+-r requirements.txt
