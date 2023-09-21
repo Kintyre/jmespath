@@ -7,7 +7,7 @@ from ksconf.builder.steps import clean_build, copy_files, pip_install
 manager = BuildManager()
 
 APP_FOLDER = "jmespath"
-SPL_NAME = "jmespath-{{version}}.tgz"
+SPL_NAME = "jmespath-for-splunk-{{version}}.tgz"
 SOURCE_DIR = "."
 
 REQUIREMENTS = "requirements.txt"
