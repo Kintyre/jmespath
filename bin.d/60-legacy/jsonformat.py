@@ -11,7 +11,6 @@ import json
 from functools import partial
 
 
-
 if sys.version_info >= (3, 7):
     # Small optimization for Python 3; no need for OrderedDict
     OrderedDict = dict
@@ -40,7 +39,7 @@ class JsonFormatCommand(StreamingCommand):
     """
     indent = Option(
         doc="How many spaces for each indentation.",
-        require=False, default=2, validate=validators.Integer(0,10))
+        require=False, default=2, validate=validators.Integer(0, 10))
 
     order = Option(
         doc="Pick order options.  undefined (default), preserve, or sort.  Only impacts hash order",
@@ -72,10 +71,10 @@ class JsonFormatCommand(StreamingCommand):
         while fields:
             f = fields.pop(0)
             if len(fields) > 1 and fields[0].lower() == "as":
-                fieldpairs.append( (f, fields[1]))
+                fieldpairs.append((f, fields[1]))
                 fields = fields[2:]
             else:
-                fieldpairs.append((f,f))
+                fieldpairs.append((f, f))
         return fieldpairs
 
     def stream(self, records):
@@ -93,7 +92,7 @@ class JsonFormatCommand(StreamingCommand):
         if self.fieldnames:
             fieldpairs = self.handle_field_as(self.fieldnames)
         else:
-            fieldpairs = [ ("_raw", "_raw") ]
+            fieldpairs = [("_raw", "_raw")]
 
         self.logger.info("fieldnames={}".format(self.fieldnames))
         for (src_field, dest_field) in fieldpairs:
@@ -157,7 +156,7 @@ class JsonFormatCommand(StreamingCommand):
             # dictates the possible return fields which cannot be updated later.
             if first_row:
                 first_row = False
-                needed_fields = [ df for (sf, df) in fieldpairs ]
+                needed_fields = [df for (sf, df) in fieldpairs]
                 if linecount_set:
                     needed_fields.append("linecount")
                 for f in needed_fields:
@@ -165,5 +164,6 @@ class JsonFormatCommand(StreamingCommand):
                         record[f] = None
 
             yield record
+
 
 dispatch(JsonFormatCommand, sys.argv, sys.stdin, sys.stdout, __name__)

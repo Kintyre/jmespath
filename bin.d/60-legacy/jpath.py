@@ -1,3 +1,7 @@
+from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
+from jmespath import functions
+from six import string_types, text_type
+import jmespath
 __version__ = "1.9.6"
 
 import json
@@ -7,13 +11,7 @@ import sys
 import splunk.Intersplunk as si
 
 
-
 ERROR_FIELD = "_jmespath_error"
-
-import jmespath
-from six import string_types, text_type
-from jmespath import functions
-from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
 
 
 # Custom functions for the JMSEPath language to make some typical splunk use cases easier to manage
@@ -51,14 +49,14 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
         """
         if s is None:
             return None
-        if isinstance(s, (list,tuple)):
-            return [ json.loads(i) for i in s ]
+        if isinstance(s, (list, tuple)):
+            return [json.loads(i) for i in s]
         try:
             return json.loads(s)
         except Exception:
             return s
 
-    @functions.signature({'types': ['array']}, {'types':['string']}, {'types':['string']})
+    @functions.signature({'types': ['array']}, {'types': ['string']}, {'types': ['string']})
     def _func_unroll(self, objs, key, value):
         """ What to call this"?
             unroll
@@ -84,7 +82,7 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
                     # Opportunistically turn this into a container to hold more than on value.
                     # Generally harmful to structured data, but plays nice with Splunk's mvfields
                     if not isinstance(d[k], list):
-                        d[k] = [ d[k] ]
+                        d[k] = [d[k]]
                     d[k].append(v)
             except KeyError:
                 # If either field is missing, just silently move on
@@ -113,9 +111,9 @@ def sanitize_fieldname(field):
 def flatten(container):
     if isinstance(container, dict):
         yield json.dumps(container)
-    elif isinstance(container, (list,tuple)):
+    elif isinstance(container, (list, tuple)):
         for i in container:
-            if isinstance(i, (list,tuple,dict)):
+            if isinstance(i, (list, tuple, dict)):
                 yield json.dumps(i)
             else:
                 yield text_type(i)
