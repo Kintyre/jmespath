@@ -1,20 +1,33 @@
+# General excludes
+*.bak
+*.tmp
+.*.swp
+*.log
+*~
+*.DS_Store
 
-# Python compiled bits (also prohibited by app-inspect)
-*.py[co]
 
-# Local dev env
+# Build artifacts
+build/
+build.cache/
+dist/
+lib/
+.release_path
+.release_name
+
+# IDE / Editors
+.idea
+.vscode/
+
+
+# Python / dev
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv
 venv
 .python-version
-.idea
-
-# Build/dist stuff
-.latest_release
-build
-dist
-app_inspect*.json
-
-# Just stuff to avoid
-*.zip
-*.tgz
-*.spl
-*.tar.gz
+pip-log.txt
+*.dist-info/
+*.egg-info/

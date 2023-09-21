@@ -1,14 +1,26 @@
 # JMESPath for Splunk
 
+## Introduction
+
 JMESPath (pronounced "james path") allows you to declaratively specify how to extract elements from a JSON document.
 
 Splunk users can download and install the app from [SplunkBase](https://splunkbase.splunk.com/app/3237/).  Developers can access the full source code on [GitHub](https://github.com/Kintyre/jmespath).
 
 Checkout the collection of [jmespath example searches](https://github.com/Kintyre/jmespath/wiki/jmsepath-search-examples) in the docs.
 
+
 ## Syntax
 
     jmespath (jmespath-string) [field=(field)] [outfield=(field)] [default=(string)]
+
+
+## Installation
+
+Steps:
+
+  1. **Install the app** on your search head or standalone Splunk instance using the normal process.
+     If you need additional help, please refer to Splunk's docs: [About installing Splunk add-ons](https://docs.splunk.com/Documentation/AddOns/released/Overview/Installingadd-ons).
+
 
 ## Examples
 
@@ -118,10 +130,22 @@ If you want to pull out the `og:site_name` value, use a command like so:
 Without the double quotes, the `:` character would cause a parsing error.
 
 
+## Upgrade instructions
+
+An in-place upgrade is normally sufficient.  However, v1.9.5 has a new build process and prior versions could have files that won't be overwritten.  If you run into any issues, please uninstall and re-install the latest version.
+
+
+## Source & Licensing
+
+This is an open source project, see `LICENSE` for full details.
+Full source code for jmespath is available on [GitHub](https://github.com/Kintyre/jmespath).
+Please check us out and send us your ideas about how to improve it. Pull request are greatly appreciated!
+
 ## Support
 
 Community support is available on best-effort basis only.  For information about commercial support, contact [Kintyre](mailto:hello@kintyre.co)
 Issues are tracked via [GitHub](https://github.com/Kintyre/jmespath/issues)
+
 
 ## History
 

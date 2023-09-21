@@ -1,0 +1,10 @@
+pip>=23
+wheel
+bump2version>=1.0.1
+ksconf
+pre-commit
+autopep8
+
+
+# Core requirements needed at run-time.
+-r requirements.txt

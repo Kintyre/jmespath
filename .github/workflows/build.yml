@@ -1,0 +1,78 @@
+name: Build Splunk app
+
+on:
+  push:
+    tags:
+    - 'v*'
+    branches:
+    - master
+
+  workflow_run:
+    workflows: ["Bump version"]
+    types:
+      - completed
+
+
+jobs:
+  build:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        # Full clone incase we run things like 'git describe'.
+        # See https://github.com/actions/checkout/issues/338
+        fetch-depth: 0
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip wheel
+        if [ -f requirements-build.txt ]; then pip install -r requirements-build.txt; fi
+    - name: JMESPath for Splunk package build
+      id: buildpkg
+      run: |
+        set -x
+        echo "Build number ${{ github.run_id }}"
+        ./build.py
+        set +x
+        echo "path=$(cat .release_path)" >> $GITHUB_OUTPUT
+        echo "name=$(cat .release_name)" >> $GITHUB_OUTPUT
+      env:
+        KSCONF_DEBUG: 1
+    - name: Determine build version
+      # It really seems like this should be possible without resorting to bash, but who knows...
+      id: pkgver
+      run: |
+        set -ex
+        if [ "${{ startsWith(github.ref, 'refs/tags/v') }}" == "true" ]; then
+          ref="${{ github.ref }}"
+        else
+          ref="refs/tags/$(git describe)"
+          test -f ".git/$ref" || echo "Describe has failed us."
+        fi
+        echo "ref=$ref" >> $GITHUB_OUTPUT
+        echo "ref_name=${ref##*/}" >> $GITHUB_OUTPUT
+
+    - name: Create release and upload GitHub artifact
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_run'
+      with:
+        name: Release ${{ steps.pkgver.outputs.ref_name }}
+        draft: false
+        prerelease: false
+        files: ${{ steps.buildpkg.outputs.path }}
+
+        tag_name: ${{ steps.pkgver.outputs.ref }}

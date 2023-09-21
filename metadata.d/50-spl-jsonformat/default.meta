@@ -1,0 +1,9 @@
+[commands]
+access = read : [ * ], write : [ admin, sc_admin ]
+export = system
+
+[commands/jsonformat]
+access = read : [ user ], write : [ admin, sc_admin ]
+
+[searchbnf]
+export = system

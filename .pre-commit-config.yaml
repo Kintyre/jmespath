@@ -2,29 +2,45 @@
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.0.0
+  rev: v4.4.0
   hooks:
-    - id: trailing-whitespace
-      exclude: README\.md
-    - id: end-of-file-fixer
-      exclude: (README\.md|\.bumpversion.cfg)$
+    - id: check-merge-conflict
     - id: check-json
     - id: check-xml
     - id: check-ast
     - id: check-added-large-files
-      args: [ '--maxkb=50' ]
-    - id: check-merge-conflict
-    - id: mixed-line-ending
-      args: [ '--fix=lf' ]
+      args: [ '--maxkb=200' ]
 
-- repo: git://github.com/detailyang/pre-commit-shell
-  rev: 1.0.4
+- repo: https://github.com/pre-commit/mirrors-autopep8
+  rev: v2.0.4
   hooks:
-    - id: shell-lint
+    - id: autopep8
 
 - repo: https://github.com/Kintyre/ksconf
-  rev: v0.7.8
+  rev: v0.11.7
   hooks:
     - id: ksconf-check
     - id: ksconf-sort
       exclude: logging\.conf
+    - id: ksconf-xml-format
+
+# Ensure 'mixed-line-ending' runs last.  Other edit-in-place tools make result in the use of native EOL on Windows.
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+    - id: trailing-whitespace
+      exclude: (README\.md)$
+    - id: end-of-file-fixer
+      exclude: (README\.md|\.bumpversion\.cfg)$
+    - id: mixed-line-ending
+      args: [ '--fix=lf' ]
+
+
+- repo: local
+  hooks:
+    - id: python-unittest
+      name: Run all unit tests for JMESPath for Splunk
+      language: system
+      entry: python -m unittest discover -s tests
+      types: [ python ]
+      pass_filenames: false
