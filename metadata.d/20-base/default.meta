@@ -1,0 +1,22 @@
+# Application-level permissions
+
+[]
+access = read : [ * ], write : [ admin, sc_admin ]
+
+[eventtypes]
+export = system
+
+[lookups]
+export = system
+
+[macros]
+export = system
+
+[props]
+export = system
+
+[tags]
+export = system
+
+[transforms]
+export = system

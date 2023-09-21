@@ -20,10 +20,10 @@ BUILD_FILES = [
 COPY_FILES = [
     "*.md",
     "appserver/",
-    "bin/",
-    "default/",
+    "bin.d/",
+    "default.d/",
     "lookups/*.csv",
-    "metadata/",
+    "metadata.d/",
     "README/",
     "static/",
 ] + BUILD_FILES
@@ -45,7 +45,7 @@ def package_spl(step):
              "--file", step.dist_path / SPL_NAME,   # Path to created tarball
              "--app-name", APP_FOLDER,              # Top-level directory name
              "--block-local",                       # Build from version control should have no 'local' folder
-             "--layer-method", "disable",
+             "--layer-method", "dir.d",
              "--blocklist", REQUIREMENTS,           # No need to distribute this
              "--release-file", str(release_path),
              ".")

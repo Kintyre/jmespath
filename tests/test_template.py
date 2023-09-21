@@ -1,7 +1,7 @@
 import unittest
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "bin"))  # noqa
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "bin.d", "20-base"))  # noqa
 
 
 # import something from the 'bin' folder :=)
