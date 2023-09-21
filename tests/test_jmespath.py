@@ -4,7 +4,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "bin.d", "50-spl-jmespath"))  # noqa
 
 
-import jquery
+import jpath
 
 # COOKIECUTTER-TODO: Fill in unit tests logic, as required.  Remove default tests
 
