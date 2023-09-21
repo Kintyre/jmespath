@@ -31,13 +31,13 @@ log.setLevel(logging.DEBUG)
 
 
 @Configuration()
-class JsonFormatCommand(StreamingCommand):
+class JmespathCommand(StreamingCommand):
     """
 
     ##Syntax
 
     .. code-block::
-        jsonformat entity=my_entity field=input
+        jmespath entity=my_entity field=input
 
     ##Description
 
@@ -80,7 +80,7 @@ class JsonFormatCommand(StreamingCommand):
     *** Method-level stuff ***
 
     # Log the commands given to the SPL command:
-    self.logger.debug('JsonFormatCommand: %s', self)
+    self.logger.debug('JmespathCommand: %s', self)
 
     # Access metadata about the search, such as earliest_time for the selected time range
     self.metadata.searchinfo.earliest_time
@@ -90,16 +90,16 @@ class JsonFormatCommand(StreamingCommand):
 
     Enable debug logging:
 
-        ... | jsonformat logging_level=DEBUG ...
+        ... | jmespath logging_level=DEBUG ...
 
     """
 
     def __init__(self):
-        super(JsonFormatCommand, self).__init__()
+        super(JmespathCommand, self).__init__()
         # COOKIECUTTER-TODO: initialize any custom variables in __init__()
 
     def prepare(self):
-        super(JsonFormatCommand, self).prepare()
+        super(JmespathCommand, self).prepare()
         # COOKIECUTTER-TODO: Customize or DELETE prepare() - arg validation & REST/CONF fetch
 
         will_execute = bool(self.metadata.searchinfo.sid and
@@ -110,7 +110,7 @@ class JsonFormatCommand(StreamingCommand):
         ''' COOKIECUTTER-TODO: Enable/delete: this block of code will prevent unused/unknown parameters
         # Check to see if an unused arguments remain after argument parsing
         if self.fieldnames:
-            self.write_error("The following arguments to jsonformat are "
+            self.write_error("The following arguments to jmespath are "
                              "unknown:  {!r}  Please check the syntax.", self.fieldnames)
             sys.exit(1)
         '''
@@ -158,4 +158,4 @@ class JsonFormatCommand(StreamingCommand):
 
 
 if __name__ == '__main__':
-    dispatch(JsonFormatCommand, sys.argv, sys.stdin, sys.stdout, __name__)
+    dispatch(JmespathCommand, sys.argv, sys.stdin, sys.stdout, __name__)

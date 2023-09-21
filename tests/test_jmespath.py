@@ -1,15 +1,15 @@
 import unittest
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "bin.d", "50-spl-jsonformat"))  # noqa
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "bin.d", "50-spl-jmespath"))  # noqa
 
 
-import jsonformat
+import jquery
 
 # COOKIECUTTER-TODO: Fill in unit tests logic, as required.  Remove default tests
 
 
-class TestJsonFormatCommand(unittest.TestCase):
+class TestJmespathCommand(unittest.TestCase):
     def test_example001(self):
         """ Descrption of the test ... """
         actual = "1"

@@ -23,7 +23,22 @@
         },
         {
             "name": "search-command",
-            "layer_name": "50-spl",
+            "layer_name": "50-spl-jmespath",
+            "cookiecutter": {
+                "spl_class": "JmespathCommand",
+                "spl_script": "jquery",
+                "spl_command": "jmespath",
+                "spl_type": "Streaming",
+                "need_logging": true,
+                "need_auth": false,
+                "conf_name": "",
+                "conf_type": "entity",
+                "json_output": true
+            }
+        },
+        {
+            "name": "search-command",
+            "layer_name": "50-spl-jsonformat",
             "cookiecutter": {
                 "spl_class": "JsonFormatCommand",
                 "spl_script": "jsonformat",
@@ -31,8 +46,8 @@
                 "spl_type": "Streaming",
                 "need_logging": true,
                 "need_auth": false,
-                "conf_name": "jsonformat",
-                "conf_type": "entity",
+                "conf_name": "",
+                "conf_type": "",
                 "json_output": true
             }
         }
