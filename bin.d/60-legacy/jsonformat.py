@@ -5,17 +5,13 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 __version__ = "1.9.6"
 
+import os
 import ast
 import sys
 import json
 from functools import partial
 
-
-if sys.version_info >= (3, 7):
-    # Small optimization for Python 3; no need for OrderedDict
-    OrderedDict = dict
-else:
-    from collections import OrderedDict
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))  # nopep8
 
 from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
 
@@ -82,7 +78,7 @@ class JsonFormatCommand(StreamingCommand):
         json_dumps = partial(json.dumps, indent=self.indent)
 
         if self.order == "preserve":
-            json_loads = partial(json.loads, object_pairs_hook=OrderedDict)
+            json_loads = json.loads
         elif self.order == "sort":
             json_dumps = partial(json.dumps, indent=self.indent, sort_keys=True)
 

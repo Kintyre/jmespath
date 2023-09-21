@@ -13,11 +13,9 @@ import time
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))  # nopep8
 
-import requests
-from cypresspoint.datatype import as_bool
-from cypresspoint.searchcommand import ensure_fields
-from cypresspoint.spath import splunk_dot_notation
-from requests.auth import HTTPBasicAuth
+# from cypresspoint.datatype import as_bool
+# from cypresspoint.searchcommand import ensure_fields
+# from cypresspoint.spath import splunk_dot_notation
 from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
 
 

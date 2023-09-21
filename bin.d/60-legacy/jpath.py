@@ -1,7 +1,7 @@
 from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
 from jmespath import functions
-from six import string_types, text_type
 import jmespath
+
 __version__ = "1.9.6"
 
 import json
@@ -73,7 +73,7 @@ class JmesPathSplunkExtraFunctions(functions.Functions):
                 k = item[key]
                 v = item[value]
                 if not isinstance(k, string_types):
-                    k = text_type(k)
+                    k = str(k)
                 k = sanitize_fieldname(k)
                 # XXX: User option:  Overwrite, or make mvlist  (Possibly just make 2 different functions?)
                 if k not in d:
@@ -116,9 +116,9 @@ def flatten(container):
             if isinstance(i, (list, tuple, dict)):
                 yield json.dumps(i)
             else:
-                yield text_type(i)
+                yield str(i)
     else:
-        yield text_type(container)
+        yield str(container)
 
 
 def output_to_field(values, output, record):
