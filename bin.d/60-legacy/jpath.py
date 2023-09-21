@@ -2,7 +2,7 @@ from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
 from jmespath import functions
 import jmespath
 
-__version__ = "1.9.6"
+__version__ = "1.9.7"
 
 import json
 import re
