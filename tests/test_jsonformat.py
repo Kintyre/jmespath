@@ -1,6 +1,7 @@
-import unittest
 import os
 import sys
+import unittest
+
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "bin.d", "50-spl-jsonformat"))  # noqa
 
 
