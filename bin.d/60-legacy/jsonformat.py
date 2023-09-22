@@ -5,15 +5,15 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 __version__ = "1.9.7"
 
-import os
 import ast
-import sys
 import json
+import os
+import sys
 from functools import partial
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))  # nopep8
 
-from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
+from splunklib.searchcommands import Configuration, Option, StreamingCommand, dispatch, validators
 
 
 def from_python(s):

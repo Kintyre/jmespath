@@ -1,6 +1,6 @@
-from jmespath.exceptions import ParseError, JMESPathError, UnknownFunctionError
-from jmespath import functions
 import jmespath
+from jmespath import functions
+from jmespath.exceptions import JMESPathError, ParseError, UnknownFunctionError
 
 __version__ = "1.9.7"
 
@@ -9,7 +9,6 @@ import re
 import sys
 
 import splunk.Intersplunk as si
-
 
 ERROR_FIELD = "_jmespath_error"
 
