@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import sys
 from pathlib import Path
-from ksconf.builder import BuildManager, VERBOSE, QUIET, default_cli
+
+from ksconf.builder import QUIET, VERBOSE, BuildManager, default_cli
 from ksconf.builder.steps import clean_build, copy_files, pip_install
 
 manager = BuildManager()

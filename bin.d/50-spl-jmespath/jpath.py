@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
 __version__ = "1.9.7"
 
-import os
-import sys
-import re
 import json
+import os
+import re
+import sys
 import time
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))  # nopep8
@@ -16,8 +17,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))  # nope
 # from cypresspoint.datatype import as_bool
 # from cypresspoint.searchcommand import ensure_fields
 # from cypresspoint.spath import splunk_dot_notation
-from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
-
+from splunklib.searchcommands import (Configuration, Option, StreamingCommand,
+                                      dispatch, validators)
 
 """ http debug logging
 import logging

@@ -72,8 +72,6 @@ If you would like to develop or build this TA from source, see the [development]
 * **jmespath Docs**:  https://jmespath.org
 
 
-This addon was built from the [Kintyre Splunk App builder](https://github.com/Kintyre/cypress-cookiecutter) (version 1.10.5) [cookiecutter](https://github.com/audreyr/cookiecutter) project.
-
 ## Support
 
 Community support is available on best-effort basis.  For information about commercial support, contact [Kintyre](mailto:hello@kintyre.co).
@@ -89,3 +87,5 @@ See the full [Change log](https://github.com/Kintyre/jmespath/wiki/Change-Log)
  * Lowell Alleman: current maintainer
  * James Saryerwinnie: author of [JMESPath](https://pypi.org/project/jmespath/) Python library
  * Mike Rybar: Logo
+
+This addon was built from the [Kintyre Splunk App builder](https://github.com/Kintyre/cypress-cookiecutter) (version 1.11.1) [cookiecutter](https://github.com/audreyr/cookiecutter) project.
