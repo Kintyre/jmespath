@@ -59,7 +59,7 @@
     ],
     "source": {
         "repo": "git@github.com:Kintyre/cypress-cookiecutter.git",
-        "rev": "v1.11.1"
+        "rev": "v1.11.2"
     },
     "tool_info": {
         "program": "CrispyCookie",

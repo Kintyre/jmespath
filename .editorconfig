@@ -18,3 +18,10 @@ indent_style = tab
 
 [*.{diff,patch}]
 trim_trailing_whitespace = false
+
+[*.py]
+profile = hug
+indent_style = space
+indent_size = 4
+skip = build,.tox,venv
+src_paths=isort,test

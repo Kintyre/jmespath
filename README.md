@@ -88,4 +88,4 @@ See the full [Change log](https://github.com/Kintyre/jmespath/wiki/Change-Log)
  * James Saryerwinnie: author of [JMESPath](https://pypi.org/project/jmespath/) Python library
  * Mike Rybar: Logo
 
-This addon was built from the [Kintyre Splunk App builder](https://github.com/Kintyre/cypress-cookiecutter) (version 1.11.1) [cookiecutter](https://github.com/audreyr/cookiecutter) project.
+This addon was built from the [Kintyre Splunk App builder](https://github.com/Kintyre/cypress-cookiecutter) (version 1.11.2) [cookiecutter](https://github.com/audreyr/cookiecutter) project.
