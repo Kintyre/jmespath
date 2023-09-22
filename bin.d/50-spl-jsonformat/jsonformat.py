@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __version__ = "0.1.0"
 
@@ -19,8 +18,7 @@ from cypresspoint.datatype import as_bool
 from cypresspoint.searchcommand import ensure_fields
 from cypresspoint.spath import splunk_dot_notation
 from requests.auth import HTTPBasicAuth
-from splunklib.searchcommands import (Configuration, Option, StreamingCommand,
-                                      dispatch, validators)
+from splunklib.searchcommands import Configuration, Option, StreamingCommand, dispatch, validators
 
 """ http debug logging
 import logging
